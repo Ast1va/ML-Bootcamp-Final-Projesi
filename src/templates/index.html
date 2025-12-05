@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Shoppers Intention Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #f7f7f7; }
+    .card { background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 900px; }
+    form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+    input, select, button { width: 100%; padding: 0.45rem; border: 1px solid #ccc; border-radius: 4px; }
+    button { background: #2563eb; color: #fff; cursor: pointer; border: none; font-weight: 700; }
+    button:hover { background: #1d4ed8; }
+    .full { grid-column: 1 / -1; }
+    .result { margin-top: 1rem; padding: 1rem; border-radius: 6px; background: #eef2ff; }
+    .error { background: #fee2e2; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Online Shoppers Intention</h1>
+    <p>Basit bir form ile tek bir ziyaretçi kaydý için gelir üretme olasýlýðýný tahmin edin.</p>
+
+    <form method="post" action="/predict">
+      <div>
+        <label for="Administrative">Administrative</label>
+        <input type="number" step="1" name="Administrative" id="Administrative" value="{{ values.get('Administrative', '') }}" />
+      </div>
+      <div>
+        <label for="Administrative_Duration">Administrative Duration</label>
+        <input type="number" step="0.01" name="Administrative_Duration" id="Administrative_Duration" value="{{ values.get('Administrative_Duration', '') }}" />
+      </div>
+      <div>
+        <label for="Informational">Informational</label>
+        <input type="number" step="1" name="Informational" id="Informational" value="{{ values.get('Informational', '') }}" />
+      </div>
+      <div>
+        <label for="Informational_Duration">Informational Duration</label>
+        <input type="number" step="0.01" name="Informational_Duration" id="Informational_Duration" value="{{ values.get('Informational_Duration', '') }}" />
+      </div>
+      <div>
+        <label for="ProductRelated">Product Related</label>
+        <input type="number" step="1" name="ProductRelated" id="ProductRelated" value="{{ values.get('ProductRelated', '') }}" />
+      </div>
+      <div>
+        <label for="ProductRelated_Duration">Product Related Duration</label>
+        <input type="number" step="0.01" name="ProductRelated_Duration" id="ProductRelated_Duration" value="{{ values.get('ProductRelated_Duration', '') }}" />
+      </div>
+      <div>
+        <label for="BounceRates">Bounce Rates</label>
+        <input type="number" step="0.0001" name="BounceRates" id="BounceRates" value="{{ values.get('BounceRates', '') }}" />
+      </div>
+      <div>
+        <label for="ExitRates">Exit Rates</label>
+        <input type="number" step="0.0001" name="ExitRates" id="ExitRates" value="{{ values.get('ExitRates', '') }}" />
+      </div>
+      <div>
+        <label for="PageValues">Page Values</label>
+        <input type="number" step="0.01" name="PageValues" id="PageValues" value="{{ values.get('PageValues', '') }}" />
+      </div>
+      <div>
+        <label for="SpecialDay">Special Day</label>
+        <input type="number" step="0.01" name="SpecialDay" id="SpecialDay" value="{{ values.get('SpecialDay', '') }}" />
+      </div>
+      <div>
+        <label for="Month">Month (0-11)</label>
+        <input type="number" step="1" name="Month" id="Month" value="{{ values.get('Month', '') }}" />
+      </div>
+      <div>
+        <label for="OperatingSystems">Operating Systems</label>
+        <input type="number" step="1" name="OperatingSystems" id="OperatingSystems" value="{{ values.get('OperatingSystems', '') }}" />
+      </div>
+      <div>
+        <label for="Browser">Browser</label>
+        <input type="number" step="1" name="Browser" id="Browser" value="{{ values.get('Browser', '') }}" />
+      </div>
+      <div>
+        <label for="Region">Region</label>
+        <input type="number" step="1" name="Region" id="Region" value="{{ values.get('Region', '') }}" />
+      </div>
+      <div>
+        <label for="TrafficType">Traffic Type</label>
+        <input type="number" step="1" name="TrafficType" id="TrafficType" value="{{ values.get('TrafficType', '') }}" />
+      </div>
+      <div>
+        <label for="VisitorType">Visitor Type</label>
+        <select name="VisitorType" id="VisitorType">
+          <option value="Returning_Visitor" {% if values.get('VisitorType') == 'Returning_Visitor' %}selected{% endif %}>Returning_Visitor</option>
+          <option value="New_Visitor" {% if values.get('VisitorType') == 'New_Visitor' %}selected{% endif %}>New_Visitor</option>
+          <option value="Other" {% if values.get('VisitorType') == 'Other' %}selected{% endif %}>Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="Weekend">Weekend</label>
+        <select name="Weekend" id="Weekend">
+          <option value="false" {% if values.get('Weekend') in [False, 'false', 'False', None] %}selected{% endif %}>False</option>
+          <option value="true" {% if values.get('Weekend') in [True, 'true', 'True'] %}selected{% endif %}>True</option>
+        </select>
+      </div>
+      <div class="full">
+        <button type="submit">Tahmin Et</button>
+      </div>
+    </form>
+
+    {% if result %}
+      <div class="result {% if result.get('error') %}error{% endif %}">
+        {% if result.get('error') %}
+          <strong>Hata:</strong> {{ result.get('error') }}
+        {% else %}
+          <div><strong>Tahmin:</strong> {{ result.get('prediction') }}</div>
+          <div><strong>Olasilik:</strong> {{ '%.4f' | format(result.get('probability', 0)) }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
