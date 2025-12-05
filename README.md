@@ -1,19 +1,19 @@
 # Online Shoppers ML Projesi
 
-Online Shoppers Intention veri seti ile ziyaretçi davranýþlarýndan gelir üretme olasýlýðýný tahmin etmeye yönelik bir uçtan uca makine öðrenmesi projesi. Depoda veri keþfi, modelleme, özellik mühendisliði, model optimizasyonu ve basit bir FastAPI tabanlý servis iskeleti bulunur.
+Online Shoppers Intention veri seti ile ziyaretï¿½i davranï¿½ï¿½larï¿½ndan gelir ï¿½retme olasï¿½lï¿½ï¿½ï¿½nï¿½ tahmin etmeye yï¿½nelik bir uï¿½tan uca makine ï¿½ï¿½renmesi projesi. Depoda veri keï¿½fi, modelleme, ï¿½zellik mï¿½hendisliï¿½i, model optimizasyonu ve basit bir FastAPI tabanlï¿½ servis iskeleti bulunur.
 
-## Klasör Yapýsý
-- `data/`: Ham ve iþlenmiþ veri dosyalarý.
-- `docs/`: Adým adým proje dokümantasyonu için þablon dosyalarý.
-- `models/`: Eðitilmiþ model ve seçili özellik dosyalarý.
-- `notebooks/`: Keþif ve modelleme sürecine ait notebook iskeletleri.
-- `src/`: Python modülleri, FastAPI uygulamasý ve testler.
+## Klasï¿½r Yapï¿½sï¿½
+- `data/`: Ham ve iï¿½lenmiï¿½ veri dosyalarï¿½.
+- `docs/`: Adï¿½m adï¿½m proje dokï¿½mantasyonu iï¿½in ï¿½ablon dosyalarï¿½.
+- `models/`: Eï¿½itilmiï¿½ model ve seï¿½ili ï¿½zellik dosyalarï¿½.
+- `notebooks/`: Keï¿½if ve modelleme sï¿½recine ait notebook iskeletleri.
+- `src/`: Python modï¿½lleri, FastAPI uygulamasï¿½ ve testler.
 
-## Hýzlý Baþlangýç
-1. Baðýmlýlýklarý kur: `pip install -r requirements.txt`
-2. Veri dosyasýný `data/raw/online_shoppers_intention.csv` yoluna yerleþtir.
-3. Eðitim iskeletini çalýþtýr (örn. `python -m src.pipeline`).
-4. FastAPI servisini çalýþtýr: `uvicorn src.app:app --reload`.
+## Hï¿½zlï¿½ Baï¿½langï¿½ï¿½
+1. Baï¿½ï¿½mlï¿½lï¿½klarï¿½ kur: `pip install -r requirements.txt`
+2. Veri dosyasï¿½nï¿½ `data/raw/online_shoppers_intention.csv` yoluna yerleï¿½tir.
+3. Eï¿½itim iskeletini ï¿½alï¿½ï¿½tï¿½r (ï¿½rn. `python -m src.pipeline`).
+4. FastAPI servisini ï¿½alï¿½ï¿½tï¿½r: `uvicorn src.app:app --reload`.
 
 ## Not
-Bu depo temel iskeleti içerir; veri temizleme, özellik seçimi ve model konfigürasyonunu proje gereksinimlerine göre doldurun.
+Bu depo temel iskeleti iï¿½erir; veri temizleme, ï¿½zellik seï¿½imi ve model konfigï¿½rasyonunu proje gereksinimlerine gï¿½re doldurulacak.
