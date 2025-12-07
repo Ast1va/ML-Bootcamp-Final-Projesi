@@ -44,7 +44,6 @@ NUMERIC_FIELDS = {
     "ExitRates",
     "PageValues",
     "SpecialDay",
-    "Month",
     "OperatingSystems",
     "Browser",
     "Region",
