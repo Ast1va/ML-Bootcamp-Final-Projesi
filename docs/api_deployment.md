@@ -73,9 +73,3 @@ curl -X POST http://localhost:8000/predict.json \
 4. Build: `pip install -r requirements.txt`
 5. Start: `uvicorn src.app:app --host 0.0.0.0 --port $PORT`
 6. Deploy et.
-
-## Test
-```bash
-# (Varsa) testleri çalıştırmak için pytest
-pytest
-```
