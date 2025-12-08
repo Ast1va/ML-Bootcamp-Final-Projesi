@@ -16,17 +16,18 @@ Kaggle’daki Online Shoppers Purchasing Intention verisiyle tek ziyaret oturumu
 - Lokal UI: `uvicorn src.app:app --reload` → http://127.0.0.1:8000  
 - JSON endpoint: `POST http://127.0.0.1:8000/predict.json`
 
-## Kısa Ekran Görseli
-- Web formu ve sonuç gösterimi için `src/templates/index.html` (lokal çalıştırıp görebilirsiniz). Ayrı görsel dosyası eklenmedi.
+## Ekran / UI
+- Canlı web arayüzü: https://ml-bootcamp-final-projesi.onrender.com (form + sonuç kutusu).
+- Lokal: `uvicorn src.app:app --reload` → http://127.0.0.1:8000 (şablon `src/templates/index.html`). Ayrı ekran görüntüsü eklenmedi.
 
 ## Proje Özeti (Veri / Pipeline / Metrik)
-- **Veri:** 12.330 satır, 17 özellik + hedef; pozitif sınıf 1.908 (~%15,5).  
+- **Veri:** 12.330 satır, 17 özellik + hedef; pozitif sınıf 1.908 (~%15,5). Kaynak: [Online Shoppers Purchasing Intention (Kaggle)](https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset).  
 - **Baseline:** LogReg (cw=balanced) – Acc 0.8500, ROC-AUC 0.8963, Recall 0.75, F1 0.61.  
 - **FE:** `Total_Duration`, `PageValue_per_Product`, `Is_HighSeason`, `Is_ReturningVisitor`; one-hot sonrası ~30+ sütun.  
 - **Final Model (aktif):** RandomForest (tuned) – Acc 0.8694, ROC-AUC 0.9296, Precision 0.5566, Recall 0.7723, F1 0.6469.  
 - **Alternatif:** LightGBM (tuned) – Acc 0.8812, ROC-AUC 0.9275, Precision 0.5903, Recall 0.7618, F1 0.6651.  
 - **Validasyon:** Stratified 80/20 test; tuning’de 3-fold CV.  
-- **Artefakt:** `models/final_rf_pipeline.pkl` mevcut; LightGBM finali için aynı yapı önerilir (örn. `models/final_lgbm_pipeline.pkl`) – README güncellenecekse aktif model dosyası netleştirilmeli.
+- **Artefakt:** `models/final_rf_pipeline.pkl` mevcut.
 
 ## Kullanılan Teknolojiler
 Python 3.12, pandas, numpy, scikit-learn, lightgbm, fastapi, uvicorn, jinja2, matplotlib/seaborn, pytest.
