@@ -215,13 +215,24 @@
         </form>
 
         {% if result %}
-          <div class="result {% if result.get('error') %}error{% endif %}">
-            <div class="result-title">Tahmin Sonucu</div>
+          <div class="result {% if result.get('error') %}error{% endif %} result-box">
+            <h3 class="result-title">Tahmin Sonucu</h3>
             {% if result.get('error') %}
-              <div><strong>Hata:</strong> {{ result.get('error') }}</div>
+              <p><strong>Hata:</strong> {{ result.get('error') }}</p>
             {% else %}
-              <div><strong>Karar:</strong> {{ result.get('prediction') }}</div>
-              <div class="prob-chip">Olasılık: {{ '%.4f' | format(result.get('probability', 0)) }}</div>
+              {% set prediction = result.get('prediction') %}
+              {% set probability = result.get('probability', 0) %}
+              <p><strong>Karar:</strong>
+              {% if prediction %}
+                  Satın alma bekleniyor
+              {% else %}
+                  Satın alma beklenmiyor
+              {% endif %}
+              </p>
+
+              <p><strong>Satın alma olasılığı:</strong>
+                  %{{ (probability * 100) | round(2) }}
+              </p>
             {% endif %}
           </div>
         {% endif %}
