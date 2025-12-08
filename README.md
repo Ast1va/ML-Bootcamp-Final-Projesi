@@ -18,7 +18,7 @@ Kaggle’daki Online Shoppers Purchasing Intention verisiyle tek ziyaret oturumu
 
 ## Ekran / UI
 - Canlı web arayüzü: https://ml-bootcamp-final-projesi.onrender.com (form + sonuç kutusu).
-- Lokal: `uvicorn src.app:app --reload` → http://127.0.0.1:8000 (şablon `src/templates/index.html`). Ayrı ekran görüntüsü eklenmedi.
+- Lokal: `uvicorn src.app:app --reload` → http://127.0.0.1:8000 (şablon `src/templates/index.html`). 
 
 ## Proje Özeti (Veri / Pipeline / Metrik)
 - **Veri:** 12.330 satır, 17 özellik + hedef; pozitif sınıf 1.908 (~%15,5). Kaynak: [Online Shoppers Purchasing Intention (Kaggle)](https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset).  

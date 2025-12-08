@@ -251,7 +251,7 @@
       Informational: 1,
       Informational_Duration: 30,
       ProductRelated: 25,
-      ProductRelated_Duration: 800,
+      ProductRelated_Duration: 900,
       BounceRates: 0.01,
       ExitRates: 0.015,
       PageValues: 12,
@@ -281,9 +281,13 @@
 
     function clearForm() {
       const form = document.querySelector("form");
-      if (form) {
-        form.reset();
-      }
+      if (!form) return;
+      form.querySelectorAll("input").forEach((el) => {
+        el.value = "";
+      });
+      form.querySelectorAll("select").forEach((el) => {
+        el.selectedIndex = 0;
+      });
     }
   </script>
 </body>
