@@ -6,7 +6,7 @@
 
 ## Data
 - Satır/sütun: 12.330 satır, 18 sütun.
-- Hedef dağılımı (`Revenue`): False = 10.422 (~%84,5), True = 1.908 (~%15,5) — kayn: `01_Baseline.ipynb` (EDA hücresi).
+- Hedef dağılımı (`Revenue`): False = 10.422 (~%84,5), True = 1.908 (~%15,5) — kaynak: `01_Baseline.ipynb` (EDA hücresi).
 - Train/Test: Stratified split 80/20 → Train 9.864, Test 2.466.
 
 ## Preprocessing & Feature Selection
@@ -14,7 +14,7 @@
 - Kategorik sütunlar: `Month`, `VisitorType`, `Weekend` (3 adet).  
 - Sayısal sütunlar: 14 adet (`Administrative`, `Administrative_Duration`, `Informational`, `Informational_Duration`, `ProductRelated`, `ProductRelated_Duration`, `BounceRates`, `ExitRates`, `PageValues`, `SpecialDay`, `OperatingSystems`, `Browser`, `Region`, `TrafficType`).
 - One-hot sonrası 26 sütunluk özellik matrisi.
-- StandardScaler ile sayısal (ve one-hot sonrası tüm) özellikler ölçeklendi. (Notebook’ta doğrudan get_dummies + scaler; ColumnTransformer ve OneHotEncoder(handle_unknown="ignore") mimarisi daha sonra pipeline’a taşınabilir.)
+- StandardScaler ile sayısal (ve one-hot sonrası tüm) özellikler ölçeklendi. (Notebook'ta doğrudan get_dummies + scaler; ColumnTransformer ve OneHotEncoder(handle_unknown="ignore") mimarisi final pipeline'da uygulandı.)
 
 ## Baseline Model 1 – Logistic Regression
 - Parametreler: `max_iter=2000`, `C=1.0`, `n_jobs=-1`, `random_state=42`, `class_weight=None` (varsayılan).

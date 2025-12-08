@@ -6,9 +6,9 @@ Kaggle’daki Online Shoppers Purchasing Intention verisiyle tek ziyaret oturumu
 2) **Baseline:** LogReg (class_weight=balanced) – Acc 0.8500, ROC-AUC 0.8963, Recall (Rev=1) 0.75, F1 0.61.  
 3) **FE deneyleri:** Toplam süre, sayfa değeri yoğunluğu, sezon ve geri dönen ziyaretçi bayrakları eklendi; AUC/Recall/F1 yükseldi.  
 4) **Validasyon şeması:** Stratified 80/20 train/test; tuning’de 3-fold stratified CV.  
-5) **Final pipeline:** 17 orijinal + 4 türetilmiş özellik; sayısal → StandardScaler, kategorik (`Month`, `VisitorType`, `Weekend`) → OneHotEncoder(ignore); model: tuned LightGBM.  
+5) **Final pipeline:** 17 orijinal + 4 türetilmiş özellik; sayısal → StandardScaler, kategorik (`Month`, `VisitorType`, `Weekend`) → OneHotEncoder(ignore); model: tuned RandomForest.  
 6) **Final vs baseline:** RF (tuned, Acc 0.8694, ROC-AUC 0.9296, Recall 0.7723, F1 0.6469) → AUC +0.03, F1 +0.04.  
-7) **İş uyumu:** Pozitif sınıfı kaçırmamak (Recall öncelikli) ve makul precision; özellikler işçe anlaşılır (süre, değer, sezon, ziyaretçi tipi).  
+7) **İş uyumu:** Pozitif sınıfı kaçırmamak (Recall öncelikli) ve makul precision; özellikler iş tarafından anlaşılır (süre, değer, sezon, ziyaretçi tipi).  
 8) **Canlı & izleme:** FastAPI/Render; izlenecekler: Recall/Precision/F1 (Rev=1), PR-AUC, sınıf dağılımı, feature drift (PageValues, ExitRates, Month_*), latency; gerekirse eşik ayarı.
 
 ## Demo / Inference
@@ -19,6 +19,8 @@ Kaggle’daki Online Shoppers Purchasing Intention verisiyle tek ziyaret oturumu
 ## Ekran / UI
 - Canlı web arayüzü: https://ml-bootcamp-final-projesi.onrender.com (form + sonuç kutusu).
 - Lokal: `uvicorn src.app:app --reload` → http://127.0.0.1:8000 (şablon `src/templates/index.html`). 
+
+![Web Arayüzü - Satın Alma Tahmin Formu](image.png)
 
 ## Proje Özeti (Veri / Pipeline / Metrik)
 - **Veri:** 12.330 satır, 17 özellik + hedef; pozitif sınıf 1.908 (~%15,5). Kaynak: [Online Shoppers Purchasing Intention (Kaggle)](https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset).  
@@ -34,7 +36,7 @@ Python 3.12, pandas, numpy, scikit-learn, lightgbm, fastapi, uvicorn, jinja2, ma
 
 ## Lokal Kurulum
 ```bash
-git clone <repo-url>
+git clone https://github.com/Ast1va/ML-Bootcamp-Final-Projesi.git
 cd online-shoppers-ml-project
 python -m venv .venv
 # Windows
@@ -48,32 +50,42 @@ uvicorn src.app:app --reload
 
 ## Repo Yapısı (Özet)
 ```
-docs/
-  00_setup.md
-  01_data_overview.md
-  02_baseline.md
-  03_feature_engineering.md
-  04_model_optimization.md
-  05_evaluation.md
-  06_final_pipeline.md
-  api_deployment.md
-notebooks/
-  analysis/00_EDA.ipynb
-  modeling/01_Baseline.ipynb
-  modeling/02_Feature_Engineering.ipynb
-  modeling/03_Model_Optimization.ipynb
-src/
-  app.py
-  config.py
-  inference.py
-  templates/index.html
-models/
-  final_rf_pipeline.pkl   # aktif RF pipeline
-  # final_lgbm_pipeline.pkl (eğer eklerseniz alternatif)
+online-shoppers-ml-project/
+├── data/
+├── docs/
+│   ├── 00_setup.md
+│   ├── 01_data_overview.md
+│   ├── 02_baseline.md
+│   ├── 03_feature_engineering.md
+│   ├── 04_model_optimization.md
+│   ├── 05_evaluation.md
+│   ├── 06_final_pipeline.md
+│   └── api_deployment.md
+├── models/
+│   └── final_rf_pipeline.pkl
+├── notebooks/
+│   └── modeling/
+│       ├── 00_EDA.ipynb
+│       ├── 01_Baseline.ipynb
+│       ├── 02_Feature_Engineering.ipynb
+│       ├── 03_Model_Optimization.ipynb
+│       ├── 04_Evaluation.ipynb
+│       └── 05_Final_Pipeline.ipynb
+├── src/
+│   ├── templates/
+│   │   └── index.html
+│   ├── app.py
+│   ├── config.py
+│   ├── inference.py
+│   └── pipeline.py
+├── requirements.txt
+└── README.md
 ```
 
 ## Lisans
 MIT Lisansı. Ayrıntılar için `LICENSE` dosyasına bakın.
 
 ## İletişim
-Sorun/öneri için GitHub Issues üzerinden iletebilirsiniz.
+
+📧 **E-posta:** [yagiz.uzunalioglu@gmail.com](mailto:yagiz.uzunalioglu@gmail.com)  
+🔗 **GitHub:** [@Ast1va](https://github.com/Ast1va)

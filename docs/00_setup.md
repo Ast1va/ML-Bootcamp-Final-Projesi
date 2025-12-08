@@ -8,7 +8,7 @@
 
 ### Depoyu klonla
 ```bash
-git clone <fork-ya-da-repo-urlunuz>.git
+git clone https://github.com/Ast1va/ML-Bootcamp-Final-Projesi.git
 cd online-shoppers-ml-project
 ```
 
@@ -39,7 +39,7 @@ uvicorn src.app:app --reload
 jupyter lab
 ```
 Sırayla:
-- `notebooks/analysis/00_EDA.ipynb`
+- `notebooks/modeling/00_EDA.ipynb`
 - `notebooks/modeling/01_Baseline.ipynb`
 - `notebooks/modeling/02_Feature_Engineering.ipynb`
 - `notebooks/modeling/03_Model_Optimization.ipynb`
@@ -57,9 +57,8 @@ online-shoppers-ml-project/
 |-- models/               # Kaydedilmiş model(ler)
 |   `-- final_rf_pipeline.pkl
 |-- notebooks/
-|   |-- analysis/
-|   |   `-- 00_EDA.ipynb
 |   `-- modeling/
+|       |-- 00_EDA.ipynb
 |       |-- 01_Baseline.ipynb
 |       |-- 02_Feature_Engineering.ipynb
 |       |-- 03_Model_Optimization.ipynb

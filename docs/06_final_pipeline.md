@@ -24,7 +24,7 @@ Bu belge, final model/pipeline seçimini, kullanılan özellik ve ön işleme ad
 - Ön işleme: ColumnTransformer; sayısal → StandardScaler, kategorik (`Month`, `VisitorType`, `Weekend`) → OneHotEncoder(handle_unknown="ignore").
 - Model: **RandomForest (tuned)** seçildi.
 - Hiperparametreler: n_estimators=400, max_depth=10, max_features="sqrt", min_samples_split=5, min_samples_leaf=8, random_state=42.
-- Artefakt: `models/final_rf_pipeline.pkl` (aktif). İsterseniz LightGBM alternatifi `models/final_lgbm_pipeline.pkl` olarak saklanabilir.
+- Artefakt: `models/final_rf_pipeline.pkl` (aktif).
 
 ## 6) Final Model ↔ Baseline Farkı
 - Baseline (LogReg bal.): ROC-AUC 0.8963, Recall 0.75, F1 0.61.

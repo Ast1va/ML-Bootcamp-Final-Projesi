@@ -28,7 +28,7 @@ Modelleme sürecinin çıktısını, kullanılan doğrulama şemasını ve final
   - Hiperparametreler: n_estimators=400, max_depth=10, max_features="sqrt", min_samples_split=5, min_samples_leaf=8, random_state=42.
 - Gerekçe: Yüksek ROC-AUC (0.9296) ve pozitif sınıf Recall/F1 (0.77 / 0.65) ile dengeli performans; inference süresi sade ve anlaşılır pipeline.
 
-**Alternatif (opsiyonel):** LightGBM (tuned) benzer AUC ile biraz daha dengeli precision/recall sunar; istenirse `final_lgbm_pipeline.pkl` olarak saklanabilir.
+**Alternatif:** LightGBM (tuned) benzer AUC ile biraz daha dengeli precision/recall sunar.
 
 ## İş Uyumu
 - Pozitif sınıfı kaçırmamak (Recall) kritik; Precision makul seviyede tutuluyor.  
