@@ -1,122 +1,279 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Online Shoppers Intention Demo</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; background: #f7f7f7; }
-    .card { background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 900px; }
-    form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
-    label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
-    input, select, button { width: 100%; padding: 0.45rem; border: 1px solid #ccc; border-radius: 4px; }
-    button { background: #2563eb; color: #fff; cursor: pointer; border: none; font-weight: 700; }
-    button:hover { background: #1d4ed8; }
-    .full { grid-column: 1 / -1; }
-    .result { margin-top: 1rem; padding: 1rem; border-radius: 6px; background: #eef2ff; }
-    .error { background: #fee2e2; }
+    :root {
+      --page-bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --primary-start: #6366f1;
+      --primary-end: #4f46e5;
+      --text: #111827;
+      --muted: #6b7280;
+      --input-border: #d1d5db;
+    }
+    * { box-sizing: border-box; }
+    body, html { margin: 0; min-height: 100%; background: var(--page-bg); color: var(--text); }
+    body { font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif; }
+    .page { min-height: 100vh; display: flex; flex-direction: column; background: var(--page-bg); }
+    .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2.75rem 1.25rem 4.5rem; }
+    .card {
+      width: min(1100px, 100%);
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2.25rem 2.5rem;
+      box-shadow: 0 20px 60px rgba(79, 70, 229, 0.14), 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+    h1 { margin: 0 0 0.4rem; font-size: 1.85rem; letter-spacing: -0.01em; }
+    .subtitle { margin: 0; color: var(--muted); }
+    form { margin-top: 1.6rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem 1.25rem; }
+    label { display: block; font-weight: 700; margin-bottom: 0.35rem; letter-spacing: 0.01em; }
+    input, select {
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid var(--input-border);
+      background: #f9fafb;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #6366f1;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+    }
+    .helper { color: var(--muted); font-size: 0.95rem; margin-top: 0.1rem; }
+    .button-row {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.9rem;
+      margin-top: 1.35rem;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      padding: 0.85rem 1.25rem;
+      transition: transform 0.12s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      min-width: 180px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-start), var(--primary-end));
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.28);
+    }
+    .btn-primary:hover { filter: brightness(0.95); transform: translateY(-1px); }
+    .btn-secondary {
+      background: #eef2ff;
+      color: #312e81;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+    .btn-secondary:hover { background: #e0e7ff; }
+    .btn-ghost {
+      background: #fff;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+    }
+    .btn-ghost:hover { background: #f3f4f6; }
+    .result {
+      margin-top: 1.4rem;
+      padding: 1.2rem 1.3rem;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #eef2ff;
+    }
+    .result.error { background: #fef2f2; border-color: #fecdd3; }
+    .result-title { font-weight: 800; margin-bottom: 0.5rem; letter-spacing: 0.01em; }
+    .result strong { color: #111827; }
+    .prob-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(99, 102, 241, 0.12);
+      color: #312e81;
+      font-weight: 700;
+    }
+    .footer-bar {
+      margin-top: auto;
+      background: linear-gradient(to right, #6366f1, #8b5cf6);
+      color: #fff;
+      text-align: center;
+      padding: 0.9rem 1rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+    }
+    @media (max-width: 640px) {
+      .card { padding: 1.7rem 1.35rem; }
+      button { min-width: 100%; }
+      .button-row { justify-content: stretch; }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Online Shoppers Intention</h1>
-    <p>Tek bir ziyaretci kaydi icin satin alma olasiligini tahmin edin.</p>
+  <div class="page">
+    <div class="main">
+      <div class="card">
+        <h1>Online Shoppers Intention</h1>
+        <p class="subtitle">Tek bir ziyaretçi kaydı için satın alma olasılığını tahmin edin.</p>
 
-    <form method="post" action="/predict">
-      <div>
-        <label for="Administrative">Administrative</label>
-        <input type="number" step="1" name="Administrative" id="Administrative" value="{{ values.get('Administrative', '') }}" />
-      </div>
-      <div>
-        <label for="Administrative_Duration">Administrative Duration</label>
-        <input type="number" step="0.01" name="Administrative_Duration" id="Administrative_Duration" value="{{ values.get('Administrative_Duration', '') }}" />
-      </div>
-      <div>
-        <label for="Informational">Informational</label>
-        <input type="number" step="1" name="Informational" id="Informational" value="{{ values.get('Informational', '') }}" />
-      </div>
-      <div>
-        <label for="Informational_Duration">Informational Duration</label>
-        <input type="number" step="0.01" name="Informational_Duration" id="Informational_Duration" value="{{ values.get('Informational_Duration', '') }}" />
-      </div>
-      <div>
-        <label for="ProductRelated">Product Related</label>
-        <input type="number" step="1" name="ProductRelated" id="ProductRelated" value="{{ values.get('ProductRelated', '') }}" />
-      </div>
-      <div>
-        <label for="ProductRelated_Duration">Product Related Duration</label>
-        <input type="number" step="0.01" name="ProductRelated_Duration" id="ProductRelated_Duration" value="{{ values.get('ProductRelated_Duration', '') }}" />
-      </div>
-      <div>
-        <label for="BounceRates">Bounce Rates</label>
-        <input type="number" step="0.0001" name="BounceRates" id="BounceRates" value="{{ values.get('BounceRates', '') }}" />
-      </div>
-      <div>
-        <label for="ExitRates">Exit Rates</label>
-        <input type="number" step="0.0001" name="ExitRates" id="ExitRates" value="{{ values.get('ExitRates', '') }}" />
-      </div>
-      <div>
-        <label for="PageValues">Page Values</label>
-        <input type="number" step="0.01" name="PageValues" id="PageValues" value="{{ values.get('PageValues', '') }}" />
-      </div>
-      <div>
-        <label for="SpecialDay">Special Day</label>
-        <input type="number" step="0.01" name="SpecialDay" id="SpecialDay" value="{{ values.get('SpecialDay', '') }}" />
-      </div>
-      <div>
-        <label for="Month">Month</label>
-        <select name="Month" id="Month">
-          {% for m in ['Feb','Mar','May','June','Jul','Aug','Sep','Oct','Nov','Dec'] %}
-          <option value="{{ m }}" {% if values.get('Month') == m %}selected{% endif %}>{{ m }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div>
-        <label for="OperatingSystems">Operating Systems</label>
-        <input type="number" step="1" name="OperatingSystems" id="OperatingSystems" value="{{ values.get('OperatingSystems', '') }}" />
-      </div>
-      <div>
-        <label for="Browser">Browser</label>
-        <input type="number" step="1" name="Browser" id="Browser" value="{{ values.get('Browser', '') }}" />
-      </div>
-      <div>
-        <label for="Region">Region</label>
-        <input type="number" step="1" name="Region" id="Region" value="{{ values.get('Region', '') }}" />
-      </div>
-      <div>
-        <label for="TrafficType">Traffic Type</label>
-        <input type="number" step="1" name="TrafficType" id="TrafficType" value="{{ values.get('TrafficType', '') }}" />
-      </div>
-      <div>
-        <label for="VisitorType">Visitor Type</label>
-        <select name="VisitorType" id="VisitorType">
-          <option value="Returning_Visitor" {% if values.get('VisitorType') == 'Returning_Visitor' %}selected{% endif %}>Returning_Visitor</option>
-          <option value="New_Visitor" {% if values.get('VisitorType') == 'New_Visitor' %}selected{% endif %}>New_Visitor</option>
-          <option value="Other" {% if values.get('VisitorType') == 'Other' %}selected{% endif %}>Other</option>
-        </select>
-      </div>
-      <div>
-        <label for="Weekend">Weekend</label>
-        <select name="Weekend" id="Weekend">
-          <option value="false" {% if values.get('Weekend') in [False, 'false', 'False', None] %}selected{% endif %}>False</option>
-          <option value="true" {% if values.get('Weekend') in [True, 'true', 'True'] %}selected{% endif %}>True</option>
-        </select>
-      </div>
-      <div class="full">
-        <button type="submit">Tahmin Et</button>
-      </div>
-    </form>
+        <form method="post" action="/predict">
+          <div>
+            <label for="Administrative">Administrative</label>
+            <input type="number" step="1" name="Administrative" id="Administrative" value="{{ values.get('Administrative', '') }}" />
+          </div>
+          <div>
+            <label for="Administrative_Duration">Administrative Duration</label>
+            <input type="number" step="0.01" name="Administrative_Duration" id="Administrative_Duration" value="{{ values.get('Administrative_Duration', '') }}" />
+          </div>
+          <div>
+            <label for="Informational">Informational</label>
+            <input type="number" step="1" name="Informational" id="Informational" value="{{ values.get('Informational', '') }}" />
+          </div>
+          <div>
+            <label for="Informational_Duration">Informational Duration</label>
+            <input type="number" step="0.01" name="Informational_Duration" id="Informational_Duration" value="{{ values.get('Informational_Duration', '') }}" />
+          </div>
+          <div>
+            <label for="ProductRelated">Product Related</label>
+            <input type="number" step="1" name="ProductRelated" id="ProductRelated" value="{{ values.get('ProductRelated', '') }}" />
+          </div>
+          <div>
+            <label for="ProductRelated_Duration">Product Related Duration</label>
+            <input type="number" step="0.01" name="ProductRelated_Duration" id="ProductRelated_Duration" value="{{ values.get('ProductRelated_Duration', '') }}" />
+          </div>
+          <div>
+            <label for="BounceRates">Bounce Rates</label>
+            <input type="number" step="0.0001" name="BounceRates" id="BounceRates" value="{{ values.get('BounceRates', '') }}" />
+            <p class="helper">0 ile 1 arasında ondalık değer</p>
+          </div>
+          <div>
+            <label for="ExitRates">Exit Rates</label>
+            <input type="number" step="0.0001" name="ExitRates" id="ExitRates" value="{{ values.get('ExitRates', '') }}" />
+            <p class="helper">0 ile 1 arasında ondalık değer</p>
+          </div>
+          <div>
+            <label for="PageValues">Page Values</label>
+            <input type="number" step="0.01" name="PageValues" id="PageValues" value="{{ values.get('PageValues', '') }}" />
+          </div>
+          <div>
+            <label for="SpecialDay">Special Day</label>
+            <input type="number" step="0.01" name="SpecialDay" id="SpecialDay" value="{{ values.get('SpecialDay', '') }}" />
+          </div>
+          <div>
+            <label for="Month">Month</label>
+            <select name="Month" id="Month">
+              {% for m in ['Feb','Mar','May','June','Jul','Aug','Sep','Oct','Nov','Dec'] %}
+              <option value="{{ m }}" {% if values.get('Month') == m %}selected{% endif %}>{{ m }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <label for="OperatingSystems">Operating Systems</label>
+            <input type="number" step="1" name="OperatingSystems" id="OperatingSystems" value="{{ values.get('OperatingSystems', '') }}" />
+          </div>
+          <div>
+            <label for="Browser">Browser</label>
+            <input type="number" step="1" name="Browser" id="Browser" value="{{ values.get('Browser', '') }}" />
+          </div>
+          <div>
+            <label for="Region">Region</label>
+            <input type="number" step="1" name="Region" id="Region" value="{{ values.get('Region', '') }}" />
+          </div>
+          <div>
+            <label for="TrafficType">Traffic Type</label>
+            <input type="number" step="1" name="TrafficType" id="TrafficType" value="{{ values.get('TrafficType', '') }}" />
+          </div>
+          <div>
+            <label for="VisitorType">Visitor Type</label>
+            <select name="VisitorType" id="VisitorType">
+              <option value="Returning_Visitor" {% if values.get('VisitorType') == 'Returning_Visitor' %}selected{% endif %}>Returning_Visitor</option>
+              <option value="New_Visitor" {% if values.get('VisitorType') == 'New_Visitor' %}selected{% endif %}>New_Visitor</option>
+              <option value="Other" {% if values.get('VisitorType') == 'Other' %}selected{% endif %}>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="Weekend">Weekend</label>
+            <select name="Weekend" id="Weekend">
+              <option value="false" {% if values.get('Weekend') in [False, 'false', 'False', None] %}selected{% endif %}>False</option>
+              <option value="true" {% if values.get('Weekend') in [True, 'true', 'True'] %}selected{% endif %}>True</option>
+            </select>
+          </div>
 
-    {% if result %}
-      <div class="result {% if result.get('error') %}error{% endif %}">
-        {% if result.get('error') %}
-          <strong>Hata:</strong> {{ result.get('error') }}
-        {% else %}
-          <div><strong>Tahmin:</strong> {{ result.get('prediction') }}</div>
-          <div><strong>Olasilik:</strong> {{ '%.4f' | format(result.get('probability', 0)) }}</div>
+          <div class="button-row">
+            <button class="btn-primary" type="submit">Tahmini Hesapla</button>
+            <button class="btn-secondary" type="button" onclick="fillExample()">Örnek Veriyi Doldur</button>
+            <button class="btn-ghost" type="button" onclick="clearForm()">Formu Temizle</button>
+          </div>
+        </form>
+
+        {% if result %}
+          <div class="result {% if result.get('error') %}error{% endif %}">
+            <div class="result-title">Tahmin Sonucu</div>
+            {% if result.get('error') %}
+              <div><strong>Hata:</strong> {{ result.get('error') }}</div>
+            {% else %}
+              <div><strong>Karar:</strong> {{ result.get('prediction') }}</div>
+              <div class="prob-chip">Olasılık: {{ '%.4f' | format(result.get('probability', 0)) }}</div>
+            {% endif %}
+          </div>
         {% endif %}
       </div>
-    {% endif %}
+    </div>
+
+    <div class="footer-bar">
+      Online Shoppers Model v1.0 · 18 Özellik · RandomForest Classifier
+    </div>
   </div>
+
+  <script>
+    const exampleData = {
+      Administrative: 1,
+      Administrative_Duration: 30,
+      Informational: 0,
+      Informational_Duration: 0,
+      ProductRelated: 10,
+      ProductRelated_Duration: 150,
+      BounceRates: 0.02,
+      ExitRates: 0.03,
+      PageValues: 5.0,
+      SpecialDay: 0.0,
+      Month: "Nov",
+      OperatingSystems: 2,
+      Browser: 1,
+      Region: 3,
+      TrafficType: 2,
+      VisitorType: "Returning_Visitor",
+      Weekend: "false"
+    };
+
+    function fillExample() {
+      const form = document.querySelector("form");
+      if (!form) return;
+      Object.entries(exampleData).forEach(([key, value]) => {
+        const field = form.querySelector(`[name="${key}"]`);
+        if (!field) return;
+        if (field.tagName === "SELECT") {
+          field.value = value;
+        } else {
+          field.value = value;
+        }
+      });
+    }
+
+    function clearForm() {
+      const form = document.querySelector("form");
+      if (form) {
+        form.reset();
+      }
+    }
+  </script>
 </body>
 </html>
