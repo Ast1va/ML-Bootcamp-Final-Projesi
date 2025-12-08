@@ -1,20 +1,44 @@
-# 01 - Data Overview
+# Veri Özeti
 
-## Problem ve Veri Tanımı
-- Amaç: Ziyaretçinin Revenue (satın alma) yapıp yapmayacağını tahmin etmek.
-- Veri seti: Online Shoppers Intention; 12.330 satır, 17 özellik + hedef.
-- Hedef dağılımı: `Revenue=True` ~%15.5, `Revenue=False` ~%84.5 (dengesiz).
+Kaggle’dan Online Shoppers Purchasing Intention veri seti. Tek bir e-ticaret oturumunun satın alma ile sonuçlanıp sonuçlanmayacağını (Revenue) tahmin etmek için kullanılır.
 
-## Alanlar (özet)
-- Sayısal: Administrative, Administrative_Duration, Informational, Informational_Duration, ProductRelated, ProductRelated_Duration, BounceRates, ExitRates, PageValues, SpecialDay, OperatingSystems, Browser, Region, TrafficType.
-- Kategorik: Month (örn. Feb, Mar, Nov), VisitorType, Weekend (bool).
+**Veri seti:** https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset
 
-## Temel Bulgular (hızlı EDA)
-- Dengesiz sınıf → değerlendirme için F1/ROC-AUC ve eşik optimizasyonu önemli.
-- ProductRelated ve PageValues metrikleri satın alma ile en çok ilişki beklenen alanlar.
-- Month ve SpecialDay sezonluk etkileri incelemek için aday.
+## Dosya
 
-## Önerilen İyileştirmeler
-- Kategorik alanların hedefe göre dağılımını inceleyip nadir kategorileri birleştirmek.
-- Ziyaret süresi/yoğunluğu türevleri: oturum toplam süreleri, oranlar.
-- Class imbalance için ağırlıklandırma veya SMOTE/undersampling denemeleri.
+### online_shoppers_intention.csv
+Oturum seviyesinde 18 sütun (17 özellik + 1 hedef).
+
+**Hedef:**
+- `Revenue`: Boolean etiket (True = satın alma, False = satın alma yok)
+
+**Oturum Yapısı:**
+- `Administrative`: Ziyaret edilen idari sayfa sayısı
+- `Administrative_Duration`: İdari sayfalarda geçirilen toplam süre (saniye)
+- `Informational`: Ziyaret edilen bilgi sayfası sayısı
+- `Informational_Duration`: Bilgi sayfalarında geçirilen toplam süre (saniye)
+- `ProductRelated`: Ziyaret edilen ürün ilişkili sayfa sayısı
+- `ProductRelated_Duration`: Ürün ilişkili sayfalarda geçirilen toplam süre (saniye)
+
+**Etkileşim ve Değer:**
+- `BounceRates`: Tek sayfa oturum oranı
+- `ExitRates`: Sayfa çıkış oranı
+- `PageValues`: Sayfa görüntülemesinin beklenen parasal değeri
+- `SpecialDay`: Özel güne yakınlık (0–1 arası)
+
+**Zamansal:**
+- `Month`: Ziyaretin gerçekleştiği ay (örn. Feb, Mar, May, June, Jul, Aug, Sep, Oct, Nov, Dec)
+- `Weekend`: Ziyaret hafta sonu mu? (True/False)
+
+**Ziyaretçi ve Trafik:**
+- `VisitorType`: Returning_Visitor, New_Visitor veya Other
+- `TrafficType`: Trafik kaynak kimliği (tam sayı)
+- `Region`: Bölge kimliği (tam sayı)
+- `OperatingSystems`: İşletim sistemi kimliği (tam sayı)
+- `Browser`: Tarayıcı kimliği (tam sayı)
+
+## Notlar
+- Her satır tek bir kullanıcı oturumunu temsil eder; kullanıcı kimliği yoktur.
+- Revenue etiketi dengeli değildir (satın almayan oturum sayısı daha fazladır).
+- Süreler saniye cinsinden, oranlar 0–1 aralığındadır.
+- Month ve VisitorType kategoriktir; Weekend ve Revenue ham CSV’de True/False olarak tutulur.
